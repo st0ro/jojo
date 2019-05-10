@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="2018.12.22" orientation="orthogonal" renderorder="right-down" width="16" height="10" tilewidth="64" tileheight="64" infinite="0" nextlayerid="4" nextobjectid="1">
+ <tileset firstgid="1" source="Emerald Inside.tsx"/>
+ <tileset firstgid="12289" source="first_acts.tsx"/>
+ <layer id="2" name="Visuals" width="16" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACqXRWw6CMBCF4aMgxOs+jFzcFj6I28IEZFsg1S34GzGVBBIDD1+amem00zRZS5GsAwKEbRyrW8/cbn6/kcxSerwR39HA6BM/27WiXiOd23y2JU9/vpIKhM6wjPoVycLmkp10Ig6c8b79Be+6oXSH9xqP2WF6+s+sKS4D8zTIfe7x+++PODfG0Rs3/9T3/6r4m1r/9c80zQuOV1TngAIAAA==
+  </data>
+ </layer>
+ <layer id="3" name="Collisions" width="16" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmMyYGBgojJmIUEtIwWYUv3k2EeJndTw82DD2OKUGYqJiX8AaxKNIoACAAA=
+  </data>
+ </layer>
+</map>
