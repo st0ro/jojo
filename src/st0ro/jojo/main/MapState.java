@@ -37,9 +37,10 @@ public class MapState extends BasicGameState{
 		{
 			for(int i = 1; i <= delta; i++) //run once for every millisecond passed since last update, ensures smoothness across devices and system load
 			{
-				if(map.getTile(Math.round(x), (int)Math.round(y+0.5)).getType() != 0)
+				if(map.getTile(Math.round(x), (int)Math.round(y+0.5)).getType() != 0 && !map.getTile(Math.round(x), (int)Math.round(y+0.5)).getDestMap().equals(""))
 				{
-					//loadMap(map);
+					Tile tile = map.getTile(Math.round(x), (int)Math.round(y+0.5)); //if trying to enter door (tile type != 0) load connected map
+					loadMap(tile.getDestMap(), tile.getDestX(), tile.getDestY());
 				}
 				else if(!map.getTile((int) Math.floor(x+0.1), (int) Math.round(y+0.5)).getBlock() && !map.getTile((int) Math.ceil(x-0.1), (int) Math.round(y+0.5)).getBlock())
 				{
@@ -58,9 +59,10 @@ public class MapState extends BasicGameState{
 		{
 			for(int i = 1; i <= delta; i++)
 			{
-				if(map.getTile(Math.round(x), (int)Math.round(y-0.5)).getType() != 0)
+				if(map.getTile(Math.round(x), (int)Math.round(y-0.5)).getType() != 0 && !map.getTile(Math.round(x), (int)Math.round(y-0.5)).getDestMap().equals(""))
 				{
-					
+					Tile tile = map.getTile(Math.round(x), (int)Math.round(y-0.5));
+					loadMap(tile.getDestMap(), tile.getDestX(), tile.getDestY());
 				}
 				else if(!map.getTile((int) Math.floor(x+0.1), (int) Math.round(y-0.5)).getBlock() && !map.getTile((int) Math.ceil(x-0.1), (int) Math.round(y-0.5)).getBlock())
 				{
@@ -80,9 +82,10 @@ public class MapState extends BasicGameState{
 		{
 			for(int i = 1; i <= delta; i++)
 			{
-				if(map.getTile((int) Math.round(x-0.5), Math.round(y)).getType() != 0)
+				if(map.getTile((int) Math.round(x-0.5), Math.round(y)).getType() != 0 && !map.getTile((int) Math.round(x-0.5), Math.round(y)).getDestMap().equals(""))
 				{
-					
+					Tile tile = map.getTile((int) Math.round(x-0.5), Math.round(y));
+					loadMap(tile.getDestMap(), tile.getDestX(), tile.getDestY());
 				}
 				else if(!map.getTile((int) Math.round(x-0.5), (int) Math.floor(y+0.1)).getBlock() && !map.getTile((int) Math.round(x-0.5), (int) Math.ceil(y-0.1)).getBlock())
 				{
@@ -102,9 +105,10 @@ public class MapState extends BasicGameState{
 		{
 			for(int i = 1; i <= delta; i++)
 			{
-				if(map.getTile((int) Math.round(x-0.5), Math.round(y)).getType() != 0)
+				if(map.getTile((int) Math.round(x-0.5), Math.round(y)).getType() != 0 && !map.getTile((int) Math.round(x+0.5), Math.round(y)).getDestMap().equals(""))
 				{
-					
+					Tile tile = map.getTile((int) Math.round(x+0.5), Math.round(y));
+					loadMap(tile.getDestMap(), tile.getDestX(), tile.getDestY());
 				}
 				else if(!map.getTile((int) Math.round(x+0.5), (int) Math.floor(y+0.1)).getBlock() && !map.getTile((int) Math.round(x+0.5), (int) Math.ceil(y-0.1)).getBlock())
 				{
@@ -127,8 +131,10 @@ public class MapState extends BasicGameState{
 	public int getID() {
 		return 0; //used to change game states for StateBasedGame
 	}
-	//private void loadMap(String map, int x, int y)
+	private void loadMap(String mapName, int newX, int newY) throws SlickException
 	{
-		
+		map = new Map("assets/maps/" + mapName + ".tmx"); //load new map based on nested info
+		x = newX;
+		y = newY;
 	}
 }

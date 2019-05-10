@@ -33,7 +33,7 @@ public class Map {
 		{
 			return mapArray[x][y]; //pass wanted tile
 		}
-		else return null;
+		else return tileSet[1];
 	}
 }
 
