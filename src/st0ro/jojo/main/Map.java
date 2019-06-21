@@ -40,7 +40,7 @@ public class Map {
 class Tile {
 	//class representing the all tiles of collision layer of maps
 	private boolean moveBlock; //does tile block movement
-	private int tileType, destX, destY; //0 = no interaction, 1 = insta door, 2 = walk door
+	private int tileType, destX, destY, destDir; //0 = no interaction, 1 = insta door, 2 = walk door
 	private String destMap;
 	public Tile(TiledMap map, int GID)
 	{
@@ -49,6 +49,7 @@ class Tile {
 		destMap = map.getTileProperty(GID, "destMap", "");
 		destX = Integer.parseInt(map.getTileProperty(GID, "destX", "-1"));
 		destY = Integer.parseInt(map.getTileProperty(GID, "destY", "-1"));
+		destDir = Integer.parseInt(map.getTileProperty(GID, "destDir", "-1"));
 	}
 	public boolean getBlock()
 	{
@@ -65,6 +66,10 @@ class Tile {
 	public int getDestY()
 	{
 		return destY;
+	}
+	public int getDestDir()
+	{
+		return destDir;
 	}
 	public String getDestMap()
 	{

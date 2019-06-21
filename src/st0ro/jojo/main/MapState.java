@@ -9,13 +9,13 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class MapState extends BasicGameState{
 
-	private float x=5, y=5;
+	private float x=3, y=3;
 	private May maySprite;
 	private Map map;
 	@Override
 	public void init(GameContainer container, StateBasedGame sBG) throws SlickException {
 		container.setVSync(true); //use VSync to cap fps (caps at screen refresh rate, supports most monitors except GSync)
-		map = new Map("assets/maps/first.tmx"); //create map based on file path
+		map = new Map("assets/maps/big empty room.tmx"); //create map based on file path
 		maySprite = new May();
 	}
 
@@ -40,7 +40,8 @@ public class MapState extends BasicGameState{
 				if(map.getTile(Math.round(x), (int)Math.round(y+0.5)).getType() != 0 && !map.getTile(Math.round(x), (int)Math.round(y+0.5)).getDestMap().equals(""))
 				{
 					Tile tile = map.getTile(Math.round(x), (int)Math.round(y+0.5)); //if trying to enter door (tile type != 0) load connected map
-					loadMap(tile.getDestMap(), tile.getDestX(), tile.getDestY());
+					loadMap(tile.getDestMap(), tile.getDestX(), tile.getDestY(), tile.getDestDir());
+					return;
 				}
 				else if(!map.getTile((int) Math.floor(x+0.1), (int) Math.round(y+0.5)).getBlock() && !map.getTile((int) Math.ceil(x-0.1), (int) Math.round(y+0.5)).getBlock())
 				{
@@ -62,7 +63,8 @@ public class MapState extends BasicGameState{
 				if(map.getTile(Math.round(x), (int)Math.round(y-0.5)).getType() != 0 && !map.getTile(Math.round(x), (int)Math.round(y-0.5)).getDestMap().equals(""))
 				{
 					Tile tile = map.getTile(Math.round(x), (int)Math.round(y-0.5));
-					loadMap(tile.getDestMap(), tile.getDestX(), tile.getDestY());
+					loadMap(tile.getDestMap(), tile.getDestX(), tile.getDestY(), tile.getDestDir());
+					return;
 				}
 				else if(!map.getTile((int) Math.floor(x+0.1), (int) Math.round(y-0.5)).getBlock() && !map.getTile((int) Math.ceil(x-0.1), (int) Math.round(y-0.5)).getBlock())
 				{
@@ -85,7 +87,8 @@ public class MapState extends BasicGameState{
 				if(map.getTile((int) Math.round(x-0.5), Math.round(y)).getType() != 0 && !map.getTile((int) Math.round(x-0.5), Math.round(y)).getDestMap().equals(""))
 				{
 					Tile tile = map.getTile((int) Math.round(x-0.5), Math.round(y));
-					loadMap(tile.getDestMap(), tile.getDestX(), tile.getDestY());
+					loadMap(tile.getDestMap(), tile.getDestX(), tile.getDestY(), tile.getDestDir());
+					return;
 				}
 				else if(!map.getTile((int) Math.round(x-0.5), (int) Math.floor(y+0.1)).getBlock() && !map.getTile((int) Math.round(x-0.5), (int) Math.ceil(y-0.1)).getBlock())
 				{
@@ -108,7 +111,8 @@ public class MapState extends BasicGameState{
 				if(map.getTile((int) Math.round(x-0.5), Math.round(y)).getType() != 0 && !map.getTile((int) Math.round(x+0.5), Math.round(y)).getDestMap().equals(""))
 				{
 					Tile tile = map.getTile((int) Math.round(x+0.5), Math.round(y));
-					loadMap(tile.getDestMap(), tile.getDestX(), tile.getDestY());
+					loadMap(tile.getDestMap(), tile.getDestX(), tile.getDestY(), tile.getDestDir());
+					return;
 				}
 				else if(!map.getTile((int) Math.round(x+0.5), (int) Math.floor(y+0.1)).getBlock() && !map.getTile((int) Math.round(x+0.5), (int) Math.ceil(y-0.1)).getBlock())
 				{
@@ -131,10 +135,11 @@ public class MapState extends BasicGameState{
 	public int getID() {
 		return 0; //used to change game states for StateBasedGame
 	}
-	private void loadMap(String mapName, int newX, int newY) throws SlickException
+	private void loadMap(String mapName, int newX, int newY, int newDir) throws SlickException
 	{
 		map = new Map("assets/maps/" + mapName + ".tmx"); //load new map based on nested info
 		x = newX;
 		y = newY;
+		maySprite.direction = newDir;
 	}
 }

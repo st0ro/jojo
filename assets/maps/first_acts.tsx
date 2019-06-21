@@ -21,7 +21,8 @@
  </tile>
  <tile id="3">
   <properties>
-   <property name="destMap" value="room"/>
+   <property name="destDir" type="int" value="2"/>
+   <property name="destMap" value="big empty room"/>
    <property name="destX" type="int" value="3"/>
    <property name="destY" type="int" value="2"/>
    <property name="moveBlock" type="bool" value="true"/>
@@ -30,8 +31,9 @@
  </tile>
  <tile id="4">
   <properties>
-   <property name="destMap" value="first"/>
-   <property name="destX" type="int" value="5"/>
+   <property name="destDir" type="int" value="2"/>
+   <property name="destMap" value="smaller room"/>
+   <property name="destX" type="int" value="3"/>
    <property name="destY" type="int" value="2"/>
    <property name="moveBlock" type="bool" value="true"/>
    <property name="tileType" type="int" value="2"/>
