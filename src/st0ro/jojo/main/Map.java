@@ -1,17 +1,24 @@
 package st0ro.jojo.main;
 
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
+
+import st0ro.jojo.entity.Entity;
 
 public class Map {
 	//class representing a single area map
 	public TiledMap tMap; //TiledMap that is being loaded and used
-	private Tile[][] mapArray; //2D matrix of Tiles for collisions and interactions
+	private int[][] mapArray; //2D matrix of IDs for collisions and interactions
 	private Tile[] tileSet; //array of all collision tiles used
+	private Entity[] entityList;
+	public static final int entityListLength = 10;
+	private Rectangle[][] blockBoxes;
 	public Map(String path) throws SlickException
 	{
 		tMap = new TiledMap(path); //load the TiledMap
-		mapArray = new Tile[tMap.getWidth()][tMap.getHeight()]; //create empty matrix to recieve Tiles
+		mapArray = new int[tMap.getWidth()][tMap.getHeight()]; //create empty matrix to recieve Tiles
+		blockBoxes = new Rectangle[tMap.getWidth()][tMap.getHeight()];
 		tileSet = new Tile[tMap.getTileSetByGID(tMap.getTileId(0, 0, 1)).lastGID-tMap.getTileSetByGID(tMap.getTileId(0, 0, 1)).firstGID]; //create empty tileSet array
 		int k = 0; //for filling tileSet
 		for(int i = tMap.getTileSetByGID(tMap.getTileId(0, 0, 1)).firstGID; i < tMap.getTileSetByGID(tMap.getTileId(0, 0, 1)).lastGID; i++)
@@ -23,17 +30,50 @@ public class Map {
 		{
 			for(int j = 0; j < tMap.getHeight(); j++)
 			{
-				mapArray[i][j] = tileSet[tMap.getTileId(i, j, 1)-tMap.getTileSetByGID(tMap.getTileId(0, 0, 1)).firstGID]; //fill the mapArray
+				mapArray[i][j] = tMap.getTileId(i, j, 1)-tMap.getTileSetByGID(tMap.getTileId(0, 0, 1)).firstGID; //fill the mapArray
+				blockBoxes[i][j] = new Rectangle(i + .1f, j + 0.1f, .8f, .8f);
 			}
 		}
+		entityList = new Entity[entityListLength];
 	}
 	public Tile getTile(int x, int y)
 	{
 		if(x >= 0 && x < mapArray.length && y >=0 && y < mapArray[x].length)
 		{
-			return mapArray[x][y]; //pass wanted tile
+			return tileSet[mapArray[x][y]]; //pass wanted tile
 		}
 		else return tileSet[1];
+	}
+	public void addEntity(Entity in)
+	{
+		for(int i = 0; i < entityListLength; i++)
+		{
+			if(entityList[i] == null)
+			{
+				entityList[i] = in;
+				break;
+			}
+		}
+	}
+	public boolean checkBox(Rectangle inBox)
+	{
+		for(int x = 0; x < tMap.getWidth(); x++)
+		{
+			for(int y = 0; y < tMap.getHeight(); y++)
+			{
+				if(inBox.intersects(blockBoxes[x][y]) && tileSet[mapArray[x][y]].getBlock()) return false;
+			}
+		}
+		return true;
+	}
+	public Entity getEntity(int index)
+	{
+		if(index >= 0 && index < entityListLength) return entityList[index];
+		else return null;
+	}
+	public void removeEntity(int index)
+	{
+		if(index >= 0 & index < entityListLength && entityList[index] != null) entityList[index] = null;
 	}
 }
 
